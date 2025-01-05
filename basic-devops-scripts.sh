@@ -6,7 +6,7 @@ check_disk_space() {
     # Check for filesystems using more than 80% space
     df -h | awk '{print $5 " " $6}' | while read -r usage mount; do
         used=${usage%\%}
-        if [ "$used" -gt 80 ]; then
+        if [[ "$used" =~ ^[0-9]+$ ]] && [ "$used" -gt 80 ]; then
             echo "WARNING: $mount is $usage full!"
         fi
     done
